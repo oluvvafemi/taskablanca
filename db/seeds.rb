@@ -11,12 +11,12 @@ org1 = Organization.create!(name: "Hotwire Labs")
 org2 = Organization.create!(name: "ActiveRecord Studios")
 
 users = User.create!([
-  { name: "Ada Lovelace",    email: "ada@hotwirelabs.dev",      organization: org1 },
-  { name: "Alan Turing", email: "alan@hotwirelabs.dev",     organization: org1 },
-  { name: "Charles Babbage",  email: "charles@hotwirelabs.dev",    organization: org1 },
-  { name: "Grace Hopper", email: "grace@activerecord.dev",     organization: org2 },
-  { name: "Donald Knuth", email: "donald@activerecord.dev",    organization: org2 },
-  { name: "Edsger Dijkstra", email: "edsger@activerecord.dev",    organization: org2 }
+  { name: "Ada Lovelace",    email_address: "ada@hotwirelabs.dev",      password: "password", organization: org1 },
+  { name: "Alan Turing", email_address: "alan@hotwirelabs.dev",     password: "password", organization: org1 },
+  { name: "Charles Babbage",  email_address: "charles@hotwirelabs.dev",    password: "password", organization: org1 },
+  { name: "Grace Hopper", email_address: "grace@activerecord.dev",     password: "password", organization: org2 },
+  { name: "Donald Knuth", email_address: "donald@activerecord.dev",    password: "password", organization: org2 },
+  { name: "Edsger Dijkstra", email_address: "edsger@activerecord.dev",    password: "password", organization: org2 }
 ])
 
 projects = Project.create!([
