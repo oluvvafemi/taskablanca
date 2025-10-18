@@ -25,15 +25,15 @@
               = image_tag "taskablanca_logo.png", alt: "Taskablanca", class: "me-2", height: 52
             %ul.nav.nav-pills.flex-column.mb-auto
               %li.nav-item
-                %a.nav-link.text-white{ href: root_path }
+                %a{ class: nav_link_class("dashboard"), href: root_path }
                   %i.bi.bi-house.me-2
                   Home
               %li.nav-item
-                %a.nav-link.text-white{ href: projects_path }
+                %a{ class: nav_link_class("projects"), href: projects_path }
                   %i.bi.bi-folder.me-2
                   Projects
               %li.nav-item
-                %a.nav-link.text-white{ href: tasks_path }
+                %a{ class: nav_link_class("tasks"), href: tasks_path }
                   %i.bi.bi-list-task.me-2
                   Tasks
         .col-12.col-md-9.col-lg-10.p-0
@@ -55,14 +55,14 @@
         %nav
           %ul.nav.nav-justified
             %li.nav-item
-              %a.nav-link.text-white.py-3{ href: root_path }
+              %a{ class: "#{nav_link_class('dashboard')} py-3", href: root_path }
                 %i.bi.bi-house
                 %span.d-block.small Home
             %li.nav-item
-              %a.nav-link.text-white.py-3{ href: projects_path }
+              %a{ class: "#{nav_link_class('projects')} py-3", href: projects_path }
                 %i.bi.bi-folder
                 %span.d-block.small Projects
             %li.nav-item
-              %a.nav-link.text-white.py-3{ href: tasks_path }
+              %a{ class: "#{nav_link_class('tasks')} py-3", href: tasks_path }
                 %i.bi.bi-list-task
                 %span.d-block.small Tasks
