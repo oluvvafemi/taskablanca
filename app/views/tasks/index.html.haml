@@ -1,0 +1,39 @@
+.d-flex.justify-content-between.align-items-center.mb-4
+  %h1.h3.mb-0 My Tasks
+  %button.btn.btn-dark New Task
+
+- if @tasks.any?
+  .card.shadow-sm
+    .card-body
+      .table-responsive
+        %table.table.table-hover.align-middle.mb-0
+          %thead
+            %tr
+              %th Task
+              %th Project
+              %th Status
+              %th Actions
+          %tbody
+            - @tasks.order(created_at: :desc).each do |task|
+              %tr
+                %td
+                  %strong= task.title
+                  %br/
+                  %small.text-muted= truncate(task.description, length: 80)
+                %td
+                  %span.badge.bg-light.text-dark= task.project.title
+                %td
+                  - if task.status == "todo"
+                    %span.badge.bg-secondary Todo
+                  - elsif task.status == "in_progress"
+                    %span.badge.bg-dark In Progress
+                  - elsif task.status == "done"
+                    %span.badge.bg-success Done
+                %td
+                  %a.btn.btn-sm.btn-outline-dark{ href: task_path(task) } View
+- else
+  .card.shadow-sm
+    .card-body.text-center.py-5
+      %i.bi.bi-list-task.fs-1.text-muted.mb-3
+      %p.text-muted.mb-0 No tasks assigned yet.
+

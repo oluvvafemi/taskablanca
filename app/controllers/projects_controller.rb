@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = Project.all
+    @projects = Current.user.projects.includes(:organization, :tasks)
   end
 end
