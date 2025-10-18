@@ -1,6 +1,14 @@
-%h1 Forgot your password?
-= tag.div(flash[:alert], style: "color:red") if flash[:alert]
-= form_with url: passwords_path do |form|
-  = form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address]
-  %br/
-  = form.submit "Email reset instructions"
+.w-100
+  .row.justify-content-center
+    .col-12.col-sm-11.col-md-9.col-lg-7.col-xl-5
+      .card.shadow-sm
+        .card-body.p-4
+          %h1.h4.mb-4 Forgot your password?
+          - if flash[:alert]
+            .alert.alert-danger= flash[:alert]
+          = form_with url: passwords_path, html: { class: "needs-validation" } do |form|
+            .mb-3
+              = form.label :email_address, class: "form-label"
+              = form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "name@example.com", value: params[:email_address], class: "form-control"
+            .d-flex.justify-content-end
+              = form.submit "Email reset instructions", class: "btn btn-dark"

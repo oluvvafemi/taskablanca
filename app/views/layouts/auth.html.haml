@@ -20,20 +20,9 @@
     .container-fluid
       .row.min-vh-100
         .col-12.col-md-3.col-lg-2.p-0.bg-black.text-white.d-none.d-md-block
-          .d-flex.flex-column.flex-shrink-0.p-3.h-100.gap-3
-            %a.d-flex.align-items-center.mb-4.me-md-auto.text-white.text-decoration-none{ href: root_path }
-              = image_tag "taskablanca_logo.png", alt: "Taskablanca", class: "me-2", height: 52
-            %ul.nav.nav-pills.flex-column.mb-auto
-              %li.nav-item
-                %a.nav-link.text-white{ href: root_path }
-                  %i.bi.bi-house.me-2
-                  Home
-        .col-12.col-md-9.col-lg-10.p-4.pb-5.pb-md-4
+          .d-flex.flex-column.align-items-center.justify-content-center.flex-shrink-0.p-3.h-100
+            %a.text-decoration-none{ href: root_path }
+              = image_tag "taskablanca_logo.png", alt: "Taskablanca", height: 52
+        .col-12.col-md-9.col-lg-10.p-4.d-flex.align-items-center.justify-content-center
           = yield
-      .d-md-none.position-fixed.bottom-0.start-0.end-0.bg-black.text-white.border-top
-        %nav
-          %ul.nav.nav-justified
-            %li.nav-item
-              %a.nav-link.text-white.py-3{ href: root_path }
-                %i.bi.bi-house
-                %span.d-block.small Home
+
