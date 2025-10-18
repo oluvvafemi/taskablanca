@@ -9,10 +9,31 @@
     = csrf_meta_tags
     = csp_meta_tag
     = yield :head
-    %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
-    %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
-    %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
-    = stylesheet_link_tag :app, "data-turbo-track": "reload"
+    %link{:href => "/taskablanca_icon.png", :rel => "icon", :type => "image/png"}/
+    %link{:href => "/taskablanca_icon.svg", :rel => "icon", :type => "image/svg+xml"}/
+    %link{:href => "/taskablanca_icon.png", :rel => "apple-touch-icon"}/
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
-  %body
-    = yield
+  %body.bg-white.text-dark
+    .d-md-none.bg-black.text-white.w-100.m-0.px-3.py-2
+      = image_tag "taskablanca_logo.png", alt: "Taskablanca", height: 40
+    .container-fluid
+      .row.min-vh-100
+        .col-12.col-md-3.col-lg-2.p-0.bg-black.text-white.d-none.d-md-block
+          .d-flex.flex-column.flex-shrink-0.p-3.h-100.gap-2
+            %a.d-flex.align-items-center.mb-5.mb-md-0.me-md-auto.text-white.text-decoration-none{ href: root_path }
+              = image_tag "taskablanca_logo.png", alt: "Taskablanca", class: "me-2", height: 52
+            %ul.nav.nav-pills.flex-column.mb-auto.mt-2
+              %li.nav-item
+                %a.nav-link.text-white{ href: root_path }
+                  %i.bi.bi-house.me-2
+                  Home
+        .col-12.col-md-9.col-lg-10.p-4.pb-5.pb-md-4
+          = yield
+      .d-md-none.position-fixed.bottom-0.start-0.end-0.bg-black.text-white.border-top
+        %nav
+          %ul.nav.nav-justified
+            %li.nav-item
+              %a.nav-link.text-white.py-3{ href: root_path }
+                %i.bi.bi-house
+                %span.d-block.small Home
