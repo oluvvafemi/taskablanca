@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   get "up" => "rails/health#show", as: :rails_health_check
 
-  root "projects#index"
+  root "dashboard#show"
 end

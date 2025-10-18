@@ -1,0 +1,83 @@
+.row.g-4.mb-4.pt-2
+  .col-12.col-sm-6.col-lg-3
+    .card.shadow-sm
+      .card-body
+        .d-flex.justify-content-between.align-items-start
+          %div
+            %h6.text-muted.text-uppercase.mb-2 Projects
+            %h2.mb-0= @total_projects
+          %i.bi.bi-folder.fs-2.text-muted
+  
+  .col-12.col-sm-6.col-lg-3
+    .card.shadow-sm
+      .card-body
+        .d-flex.justify-content-between.align-items-start
+          %div
+            %h6.text-muted.text-uppercase.mb-2 Total Tasks
+            %h2.mb-0= @total_tasks
+          %i.bi.bi-list-task.fs-2.text-muted
+  
+  .col-12.col-sm-6.col-lg-3
+    .card.shadow-sm
+      .card-body
+        .d-flex.justify-content-between.align-items-start
+          %div
+            %h6.text-muted.text-uppercase.mb-2 In Progress
+            %h2.mb-0= @in_progress_tasks
+          %i.bi.bi-clock-history.fs-2.text-muted
+  
+  .col-12.col-sm-6.col-lg-3
+    .card.shadow-sm
+      .card-body
+        .d-flex.justify-content-between.align-items-start
+          %div
+            %h6.text-muted.text-uppercase.mb-2 Completed
+            %h2.mb-0= @done_tasks
+          %i.bi.bi-check-circle.fs-2.text-muted
+
+.row.g-4
+  .col-12.col-lg-8
+    .card.shadow-sm
+      .card-header.bg-white
+        %h5.mb-0 My Tasks
+      .card-body
+        - if @tasks.any?
+          .table-responsive
+            %table.table.table-hover.align-middle.mb-0
+              %thead
+                %tr
+                  %th Task
+                  %th Project
+                  %th Status
+              %tbody
+                - @tasks.order(created_at: :desc).limit(10).each do |task|
+                  %tr
+                    %td
+                      %strong= task.title
+                    %td
+                      %span.text-muted= task.project.title
+                    %td
+                      - if task.status == "todo"
+                        %span.badge.bg-secondary Todo
+                      - elsif task.status == "in_progress"
+                        %span.badge.bg-dark In Progress
+                      - elsif task.status == "done"
+                        %span.badge.bg-success Done
+        - else
+          %p.text-muted.mb-0 No tasks assigned yet.
+  
+  .col-12.col-lg-4
+    .card.shadow-sm
+      .card-header.bg-white
+        %h5.mb-0 My Projects
+      .card-body
+        - if @projects.any?
+          .list-group.list-group-flush
+            - @projects.each do |project|
+              .list-group-item.px-0
+                %h6.mb-1= project.title
+                %p.text-muted.small.mb-1= truncate(project.description, length: 60)
+                %span.badge.bg-light.text-dark= "#{project.tasks.count} tasks"
+        - else
+          %p.text-muted.mb-0 No projects yet.
+

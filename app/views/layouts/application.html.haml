@@ -20,16 +20,29 @@
     .container-fluid
       .row.min-vh-100
         .col-12.col-md-3.col-lg-2.p-0.bg-black.text-white.d-none.d-md-block
-          .d-flex.flex-column.flex-shrink-0.p-3.h-100.gap-3
-            %a.d-flex.align-items-center.mb-4.me-md-auto.text-white.text-decoration-none{ href: root_path }
+          .d-flex.flex-column.flex-shrink-0.px-3.h-100
+            %a.d-flex.align-items-center.mb-4.me-md-auto.text-white.text-decoration-none.mt-4{ href: root_path }
               = image_tag "taskablanca_logo.png", alt: "Taskablanca", class: "me-2", height: 52
             %ul.nav.nav-pills.flex-column.mb-auto
               %li.nav-item
                 %a.nav-link.text-white{ href: root_path }
                   %i.bi.bi-house.me-2
                   Home
-        .col-12.col-md-9.col-lg-10.p-4.pb-5.pb-md-4
-          = yield
+        .col-12.col-md-9.col-lg-10.p-0
+          .d-flex.flex-column.h-100
+            .bg-white.border-bottom.px-4.py-3
+              .d-flex.justify-content-between.align-items-center
+                .me-3{style: "max-width: 500px; width: 100%;"}
+                  .input-group
+                    %span.input-group-text.bg-white.border-end-0
+                      %i.bi.bi-search
+                    %input.form-control.border-start-0{type: "search", placeholder: "Search tasks, projects...", "aria-label": "Search"}
+                .d-flex.align-items-center.gap-2.ms-auto
+                  %span.d-none.d-md-inline.text-muted= Current.user.name
+                  .rounded-circle.bg-dark.text-white.d-flex.align-items-center.justify-content-center{style: "width: 40px; height: 40px;"}
+                    = Current.user.name.first.upcase
+            .flex-grow-1.p-4.pb-md-4.mobile-bottom-padding
+              = yield
       .d-md-none.position-fixed.bottom-0.start-0.end-0.bg-black.text-white.border-top
         %nav
           %ul.nav.nav-justified
