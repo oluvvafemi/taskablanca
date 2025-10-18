@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_18_114339) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_18_164726) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,6 +40,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_114339) do
     t.index ["title", "organization_id"], name: "index_projects_on_title_and_organization_id", unique: true
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "task_assignments", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "task_id", null: false
@@ -61,17 +70,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_114339) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "email"
+    t.string "email_address"
     t.bigint "organization_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.string "password_digest", null: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
   add_foreign_key "project_memberships", "projects"
   add_foreign_key "project_memberships", "users"
   add_foreign_key "projects", "organizations"
+  add_foreign_key "sessions", "users"
   add_foreign_key "task_assignments", "tasks"
   add_foreign_key "task_assignments", "users"
   add_foreign_key "tasks", "projects"
