@@ -1,11 +1,22 @@
-.row.justify-content-center
-  .col-12.col-lg-8
-    .d-flex.align-items-center.mb-4
-      = link_to tasks_path, class: "btn btn-outline-secondary btn-sm me-3" do
-        %i.bi.bi-arrow-left
-      %h1.h3.mb-0 Create New Task
+- if @project
+  = turbo_frame_tag @task do
+    .row.justify-content-center
+      .col-12.col-lg-8
+        .card.shadow-sm.mb-3
+          .card-body
+            %h5.card-title.mb-4
+              %i.bi.bi-plus-lg.me-2
+              Create New Task
+            = render "form", task: @task
+- else
+  .row.justify-content-center
+    .col-12.col-lg-8
+      .d-flex.align-items-center.mb-4
+        = link_to tasks_path, class: "btn btn-outline-secondary btn-sm me-3" do
+          %i.bi.bi-arrow-left
+        %h1.h3.mb-0 Create New Task
 
-    .card.shadow-sm
-      .card-body
-        = render "form", task: @task
+      .card.shadow-sm
+        .card-body
+          = render "form", task: @task
 

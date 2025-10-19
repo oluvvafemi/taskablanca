@@ -12,6 +12,9 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @task.project_id = params[:project_id] if params[:project_id]
+    @project = Current.user.projects.find(params[:project_id]) if params[:project_id]
+  rescue ActiveRecord::RecordNotFound
+    redirect_to projects_path, alert: "Project not found or you don't have access."
   end
 
   def create
@@ -24,8 +27,15 @@ class TasksController < ApplicationController
 
     if @task.save
       @task.task_assignments.create(user: Current.user)
-      redirect_to @task, notice: "Task was successfully created."
+      @project = @task.project
+      @tasks = @project.tasks.includes(:users).order(created_at: :desc)
+
+      respond_to do |format|
+        format.html { redirect_to @task, notice: "Task was successfully created." }
+        format.turbo_stream
+      end
     else
+      @project = Current.user.projects.find(@task.project_id) if @task.project_id
       render :new, status: :unprocessable_entity
     end
   end

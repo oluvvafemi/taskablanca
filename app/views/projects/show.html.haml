@@ -23,48 +23,12 @@
     %i.bi.bi-list-task.me-2
     Tasks
     %span.badge.bg-secondary.ms-2= @tasks.count
-  = link_to new_task_path(project_id: @project.id), class: "btn btn-dark btn-sm" do
+  = link_to new_task_path(project_id: @project.id), class: "btn btn-dark btn-sm", data: { turbo_frame: dom_id(Task.new) } do
     %i.bi.bi-plus-lg.me-1
     New Task
 
-- if @tasks.any?
-  .card.shadow-sm
-    .card-body
-      .table-responsive
-        %table.table.table-hover.align-middle.mb-0
-          %thead
-            %tr
-              %th Task
-              %th Status
-              %th Assigned To
-              %th Actions
-          %tbody
-            - @tasks.each do |task|
-              %tr
-                %td
-                  %strong= task.title
-                  %br/
-                  %small.text-muted= truncate(task.description, length: 80)
-                %td
-                  - if task.status == "todo"
-                    %span.badge.bg-secondary Todo
-                  - elsif task.status == "in_progress"
-                    %span.badge.bg-dark In Progress
-                  - elsif task.status == "done"
-                    %span.badge.bg-success Done
-                %td
-                  - if task.users.any?
-                    = task.users.map(&:name).join(", ")
-                  - else
-                    %span.text-muted Unassigned
-                %td
-                  = link_to "View", task_path(task), class: "btn btn-sm btn-outline-dark"
-- else
-  .card.shadow-sm
-    .card-body.text-center.py-5
-      %i.bi.bi-list-task.fs-1.text-muted.mb-3
-      %p.text-muted.mb-3 No tasks in this project yet.
-      = link_to new_task_path(project_id: @project.id), class: "btn btn-dark" do
-        %i.bi.bi-plus-lg.me-1
-        Create First Task
+= turbo_frame_tag Task.new
+
+= turbo_frame_tag "tasks" do
+  = render "tasks/tasks_list", tasks: @tasks, project: @project
 

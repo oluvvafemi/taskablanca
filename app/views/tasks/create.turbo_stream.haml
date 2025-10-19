@@ -1,0 +1,5 @@
+= turbo_stream.update "tasks" do
+  = render "tasks/tasks_list", tasks: @tasks, project: @project
+
+= turbo_stream.update Task.new, ""
+
