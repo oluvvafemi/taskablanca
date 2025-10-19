@@ -18,3 +18,6 @@
             .d-flex.justify-content-between.align-items-center
               = link_to "Forgot password?", new_password_path, class: "small text-muted-link"
               = form.submit "Sign in", class: "btn btn-dark"
+          .text-center.mt-3
+            %span.small.text-muted Don't have an account?
+            = link_to "Sign up", new_registration_path, class: "small ms-1 text-muted-link"
