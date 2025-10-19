@@ -1,0 +1,7 @@
+- if tasks.any?
+  - tasks.each do |task|
+    = render "tasks/kanban_task_card", task: task
+- else
+  .text-center.text-muted.py-4
+    %i.bi.bi-inbox.fs-1
+    %p.mt-2 No tasks in this column

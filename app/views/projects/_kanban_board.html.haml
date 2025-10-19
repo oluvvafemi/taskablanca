@@ -1,0 +1,30 @@
+.row.g-3{ id: "kanban_board" }
+  .col-md-4
+    .card.h-100
+      .card-header.bg-secondary.text-white.d-flex.justify-content-between.align-items-center
+        %h6.mb-0
+          %i.bi.bi-list-ul.me-2
+          To Do
+        %span.badge.bg-light.text-dark= todo_tasks.count
+      .card-body.p-2{ id: "todo_tasks" }
+        = render "tasks/kanban_column_content", tasks: todo_tasks
+
+  .col-md-4
+    .card.h-100
+      .card-header.bg-dark.text-white.d-flex.justify-content-between.align-items-center
+        %h6.mb-0
+          %i.bi.bi-clock-history.me-2
+          In Progress
+        %span.badge.bg-light.text-dark= in_progress_tasks.count
+      .card-body.p-2{ id: "in_progress_tasks" }
+        = render "tasks/kanban_column_content", tasks: in_progress_tasks
+
+  .col-md-4
+    .card.h-100
+      .card-header.bg-success.text-white.d-flex.justify-content-between.align-items-center
+        %h6.mb-0
+          %i.bi.bi-check-circle.me-2
+          Done
+        %span.badge.bg-light.text-dark= done_tasks.count
+      .card-body.p-2{ id: "done_tasks" }
+        = render "tasks/kanban_column_content", tasks: done_tasks
