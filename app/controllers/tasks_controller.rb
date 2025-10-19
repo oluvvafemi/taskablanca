@@ -30,7 +30,9 @@ class TasksController < ApplicationController
     if @task.save
       @task.task_assignments.create(user: Current.user)
       @project = @task.project
-      @tasks = @project.tasks.includes(:users).order(created_at: :desc)
+      set_tasks
+
+      handle_kanban_context
 
       respond_to do |format|
         format.html { redirect_to @task, notice: "Task was successfully created." }
@@ -51,6 +53,8 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
+      handle_kanban_context
+
       respond_to do |format|
         format.html { redirect_to @task, notice: "Task was successfully updated." }
         format.turbo_stream
@@ -63,6 +67,9 @@ class TasksController < ApplicationController
   def destroy
     @project = @task.project
     @task.destroy
+    set_tasks
+
+    handle_kanban_context
 
     respond_to do |format|
       format.html { redirect_to project_path(@project), notice: "Task was successfully deleted." }
@@ -84,5 +91,28 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :status, :project_id)
+  end
+
+  def set_tasks
+    @tasks = @project.tasks.includes(:users).order(created_at: :desc)
+  end
+
+  def kanban_context?
+    request.referer&.include?("/kanban")
+  end
+
+  def handle_kanban_context
+    @kanban_context = kanban_context?
+    if @kanban_context
+      @project = @task.project if @project.nil?
+      load_kanban_data
+    end
+  end
+
+  def load_kanban_data
+    set_tasks if @tasks.nil?
+    @todo_tasks = @tasks.where(status: :todo)
+    @in_progress_tasks = @tasks.where(status: :in_progress)
+    @done_tasks = @tasks.where(status: :done)
   end
 end

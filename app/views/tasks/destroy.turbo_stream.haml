@@ -1,2 +1,8 @@
-= turbo_stream.remove @task
+- if @kanban_context
+  = turbo_stream.replace "kanban_board" do
+    = render "projects/kanban_board", project: @project, tasks: @tasks, todo_tasks: @todo_tasks, in_progress_tasks: @in_progress_tasks, done_tasks: @done_tasks
+  = turbo_stream.update "task_count", @tasks.count
+- else
+  = turbo_stream.remove @task
+  = turbo_stream.update "task_count", @tasks.count
 

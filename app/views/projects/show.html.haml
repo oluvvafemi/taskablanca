@@ -25,7 +25,7 @@
   %h5.mb-0
     %i.bi.bi-list-task.me-2
     Tasks
-    %span.badge.bg-secondary.ms-2= @tasks.count
+    %span.badge.bg-secondary.ms-2{ id: "task_count" }= @tasks.count
   = link_to new_task_path(project_id: @project.id), class: "btn btn-dark btn-sm", data: { turbo_frame: dom_id(Task.new) } do
     %i.bi.bi-plus-lg.me-1
     New Task

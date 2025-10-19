@@ -1,5 +1,9 @@
-= turbo_stream.replace dom_id(@task) do
-  = render "tasks/task_row", task: @task
-
-= turbo_stream.update "edit_task", ""
+- if @kanban_context
+  = turbo_stream.replace "kanban_board" do
+    = render "projects/kanban_board", project: @project, tasks: @tasks, todo_tasks: @todo_tasks, in_progress_tasks: @in_progress_tasks, done_tasks: @done_tasks
+  = turbo_stream.update "edit_task", ""
+- else
+  = turbo_stream.replace dom_id(@task) do
+    = render "tasks/task_row", task: @task
+  = turbo_stream.update "edit_task", ""
 

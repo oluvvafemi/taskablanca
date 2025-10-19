@@ -1,5 +1,11 @@
-= turbo_stream.update "tasks" do
-  = render "tasks/tasks_list", tasks: @tasks, project: @project
-
-= turbo_stream.update Task.new, ""
+- if @kanban_context
+  = turbo_stream.replace "kanban_board" do
+    = render "projects/kanban_board", project: @project, tasks: @tasks, todo_tasks: @todo_tasks, in_progress_tasks: @in_progress_tasks, done_tasks: @done_tasks
+  = turbo_stream.update "task_count", @tasks.count
+  = turbo_stream.update Task.new, ""
+- else
+  = turbo_stream.update "tasks" do
+    = render "tasks/tasks_list", tasks: @tasks, project: @project
+  = turbo_stream.update "task_count", @tasks.count
+  = turbo_stream.update Task.new, ""
 
