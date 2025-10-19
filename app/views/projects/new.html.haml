@@ -1,0 +1,11 @@
+.row.justify-content-center
+  .col-12.col-lg-8
+    .d-flex.align-items-center.mb-4
+      = link_to projects_path, class: "btn btn-outline-secondary btn-sm me-3" do
+        %i.bi.bi-arrow-left
+      %h1.h3.mb-0 Create New Project
+
+    .card.shadow-sm
+      .card-body
+        = render "form", project: @project
+
