@@ -17,11 +17,11 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = Current.user.organization.projects.build
+    @project = Current.organization.projects.build
   end
 
   def create
-    @project = Current.user.organization.projects.build(project_params)
+    @project = Current.organization.projects.build(project_params)
 
     if @project.save
       @project.project_memberships.create(user: Current.user)
