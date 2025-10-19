@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-  belongs_to :organization
-
   has_secure_password
   has_many :sessions, dependent: :destroy
+
+  has_many :organization_memberships, dependent: :destroy
+  has_many :organizations, through: :organization_memberships
 
   has_many :project_memberships, dependent: :destroy
   has_many :projects, through: :project_memberships

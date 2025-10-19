@@ -4,20 +4,27 @@ TaskAssignment.delete_all
 ProjectMembership.delete_all
 Task.delete_all
 Project.delete_all
+Session.delete_all
+OrganizationMembership.delete_all
 User.delete_all
 Organization.delete_all
 
 org1 = Organization.create!(name: "Hotwire Labs")
 org2 = Organization.create!(name: "ActiveRecord Studios")
 
-users = User.create!([
-  { name: "Ada Lovelace",    email_address: "ada@hotwirelabs.dev",      password: "password", organization: org1 },
-  { name: "Alan Turing", email_address: "alan@hotwirelabs.dev",     password: "password", organization: org1 },
-  { name: "Charles Babbage",  email_address: "charles@hotwirelabs.dev",    password: "password", organization: org1 },
-  { name: "Grace Hopper", email_address: "grace@activerecord.dev",     password: "password", organization: org2 },
-  { name: "Donald Knuth", email_address: "donald@activerecord.dev",    password: "password", organization: org2 },
-  { name: "Edsger Dijkstra", email_address: "edsger@activerecord.dev",    password: "password", organization: org2 }
-])
+ada = User.create!(name: "Ada Lovelace", email_address: "ada@hotwirelabs.dev", password: "password")
+alan = User.create!(name: "Alan Turing", email_address: "alan@hotwirelabs.dev", password: "password")
+charles = User.create!(name: "Charles Babbage", email_address: "charles@hotwirelabs.dev", password: "password")
+grace = User.create!(name: "Grace Hopper", email_address: "grace@activerecord.dev", password: "password")
+donald = User.create!(name: "Donald Knuth", email_address: "donald@activerecord.dev", password: "password")
+edsger = User.create!(name: "Edsger Dijkstra", email_address: "edsger@activerecord.dev", password: "password")
+
+OrganizationMembership.create!(user: ada, organization: org1, role: :owner)
+OrganizationMembership.create!(user: alan, organization: org1, role: :admin)
+OrganizationMembership.create!(user: charles, organization: org1, role: :member)
+OrganizationMembership.create!(user: grace, organization: org2, role: :owner)
+OrganizationMembership.create!(user: donald, organization: org2, role: :admin)
+OrganizationMembership.create!(user: edsger, organization: org2, role: :member)
 
 projects = Project.create!([
   { title: "TurboBoard",        description: "A real-time Kanban powered by Hotwire.", organization: org1 },
@@ -26,8 +33,15 @@ projects = Project.create!([
   { title: "RailsRefactor Pro", description: "Refactor legacy apps to follow modern Rails conventions.", organization: org2 }
 ])
 
+org1_users = [ ada, alan, charles ]
+org2_users = [ grace, donald, edsger ]
+
 projects.each do |project|
-  project_users = users.select { |u| u.organization_id == project.organization_id }.sample(2)
+  project_users = if project.organization == org1
+    org1_users.sample(2)
+  else
+    org2_users.sample(2)
+  end
   project.users << project_users
 end
 
