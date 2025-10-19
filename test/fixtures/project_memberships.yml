@@ -1,0 +1,19 @@
+alice_website:
+  user: alice
+  project: website_redesign
+
+alice_mobile:
+  user: alice
+  project: mobile_app
+
+charlie_website:
+  user: charlie
+  project: website_redesign
+
+bob_research:
+  user: bob
+  project: research_project
+
+diana_security:
+  user: diana
+  project: security_upgrade

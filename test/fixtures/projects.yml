@@ -1,0 +1,19 @@
+website_redesign:
+  title: Website Redesign
+  description: Redesign the company website with modern UI
+  organization: acme
+
+mobile_app:
+  title: Mobile App Development
+  description: Build iOS and Android apps
+  organization: acme
+
+research_project:
+  title: Research Project
+  description: Research new technologies
+  organization: stark
+
+security_upgrade:
+  title: Security System Upgrade
+  description: Upgrade all security systems
+  organization: wayne

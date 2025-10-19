@@ -1,0 +1,29 @@
+design_mockups:
+  title: Create design mockups
+  description: Design mockups for the new homepage
+  status: todo
+  project: website_redesign
+
+implement_navbar:
+  title: Implement navigation bar
+  description: Build responsive navigation bar component
+  status: in_progress
+  project: website_redesign
+
+setup_backend:
+  title: Setup backend API
+  description: Configure Rails API for mobile app
+  status: done
+  project: mobile_app
+
+research_ai:
+  title: Research AI frameworks
+  description: Evaluate different AI frameworks for our use case
+  status: todo
+  project: research_project
+
+install_cameras:
+  title: Install new security cameras
+  description: Install cameras on all floors
+  status: in_progress
+  project: security_upgrade

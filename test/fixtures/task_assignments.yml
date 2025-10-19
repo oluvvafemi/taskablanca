@@ -1,0 +1,19 @@
+alice_design:
+  user: alice
+  task: design_mockups
+
+charlie_navbar:
+  user: charlie
+  task: implement_navbar
+
+alice_backend:
+  user: alice
+  task: setup_backend
+
+bob_ai:
+  user: bob
+  task: research_ai
+
+diana_cameras:
+  user: diana
+  task: install_cameras
