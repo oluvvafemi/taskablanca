@@ -6,6 +6,9 @@
       %h1.h3.mb-1= @project.title
       %span.badge.bg-light.text-dark= @project.organization.name
   .d-flex.gap-2
+    = link_to kanban_project_path(@project), class: "btn btn-outline-primary" do
+      %i.bi.bi-kanban.me-1
+      Kanban
     = link_to edit_project_path(@project), class: "btn btn-outline-dark" do
       %i.bi.bi-pencil.me-1
       Edit

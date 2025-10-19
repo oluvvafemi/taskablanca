@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[show edit update destroy]
+  before_action :set_project, only: %i[show edit update destroy kanban]
 
   def index
     @projects = Current.user.projects.includes(:organization, :tasks)
@@ -7,6 +7,13 @@ class ProjectsController < ApplicationController
 
   def show
     @tasks = @project.tasks.includes(:users).order(created_at: :desc)
+  end
+
+  def kanban
+    @tasks = @project.tasks.includes(:users).order(created_at: :desc)
+    @todo_tasks = @tasks.where(status: :todo)
+    @in_progress_tasks = @tasks.where(status: :in_progress)
+    @done_tasks = @tasks.where(status: :done)
   end
 
   def new

@@ -18,7 +18,13 @@
               %small.text-muted
                 %i.bi.bi-list-task.me-1
                 = "#{project.tasks.count} tasks"
-              %a.btn.btn-sm.btn-outline-dark{ href: project_path(project) } View
+              .d-flex.gap-2
+                = link_to project_path(project), class: "btn btn-sm btn-outline-dark" do
+                  %i.bi.bi-list.me-1
+                  List
+                = link_to kanban_project_path(project), class: "btn btn-sm btn-outline-primary" do
+                  %i.bi.bi-kanban.me-1
+                  Kanban
 - else
   .card.shadow-sm
     .card-body.text-center.py-5

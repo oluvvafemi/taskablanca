@@ -5,6 +5,10 @@ Rails.application.routes.draw do
 
   root "dashboard#show"
 
-  resources :projects
+  resources :projects do
+    member do
+      get :kanban
+    end
+  end
   resources :tasks
 end
