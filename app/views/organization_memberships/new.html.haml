@@ -1,0 +1,31 @@
+.d-flex.justify-content-between.align-items-center.mb-4
+  .d-flex.align-items-center
+    = link_to @organization, class: "btn btn-outline-secondary btn-sm me-3" do
+      %i.bi.bi-arrow-left
+    %h1.h3.mb-0 Invite Member
+
+.row.justify-content-center
+  .col-12.col-md-8.col-lg-6
+    .card.shadow-sm
+      .card-body
+        %p.text-muted.mb-4 Invite someone to join #{@organization.name}. If they don't have an account, one will be created and they'll receive a password reset email.
+
+        = form_with model: @membership, url: organization_organization_memberships_path(@organization), html: { class: "needs-validation" } do |form|
+          .mb-3
+            = form.label :email_address, "Email Address", class: "form-label"
+            = form.email_field :email_address, required: true, autofocus: true, placeholder: "colleague@example.com", class: "form-control"
+            %small.form-text.text-muted We'll create an account if they don't have one
+
+          .mb-3
+            = form.label :name, "Name (optional)", class: "form-label"
+            = form.text_field :name, placeholder: "John Doe", class: "form-control"
+            %small.form-text.text-muted Only used if creating a new account
+
+          .mb-3
+            = form.label :role, class: "form-label"
+            = form.select :role, options_for_select([["Member - Can view and work on projects", "member"], ["Admin - Can manage members", "admin"], ["Owner - Full control", "owner"]], "member"), {}, class: "form-select"
+
+          .d-flex.justify-content-between.align-items-center
+            = link_to "Cancel", @organization, class: "btn btn-outline-secondary"
+            = form.submit "Send Invite", class: "btn btn-dark"
+

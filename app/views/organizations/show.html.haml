@@ -45,7 +45,11 @@
                       %strong= member_membership.user.name
                       %br
                       %small.text-muted= member_membership.user.email_address
-                %span.badge.bg-secondary= member_membership.role.titleize
+                .d-flex.align-items-center.gap-2
+                  %span.badge.bg-secondary= member_membership.role.titleize
+                  - if (membership&.owner? || membership&.admin?) && member_membership.user != Current.user
+                    = button_to organization_membership_path(member_membership), method: :delete, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Remove #{member_membership.user.name} from this organization?" } } do
+                      %i.bi.bi-trash
 
   .col-md-6
     .card.shadow-sm.h-100
