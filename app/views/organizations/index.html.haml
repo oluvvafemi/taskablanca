@@ -1,0 +1,39 @@
+.d-flex.justify-content-between.align-items-center.mb-4
+  %h1.h3.mb-0 Organizations
+  = link_to new_organization_path, class: "btn btn-dark" do
+    %i.bi.bi-plus-lg.me-1
+    New Organization
+
+- if @organizations.any?
+  .row.g-4
+    - @organizations.each do |organization|
+      .col-12.col-md-6.col-lg-4
+        .card.shadow-sm.h-100{ class: organization == Current.organization ? "border-primary" : "" }
+          .card-body
+            .d-flex.justify-content-between.align-items-start.mb-3
+              %h5.card-title.mb-0= organization.name
+              - if organization == Current.organization
+                %span.badge.bg-primary Active
+            .mb-3
+              - membership = organization.organization_memberships.find { |m| m.user_id == Current.user.id }
+              - if membership
+                %span.badge.bg-secondary.me-2
+                  %i.bi.bi-person-badge.me-1
+                  = membership.role.titleize
+              %span.text-muted.small
+                %i.bi.bi-people.me-1
+                = pluralize(organization.organization_memberships.count, "member")
+            .d-flex.gap-2.mt-auto
+              = link_to organization, class: "btn btn-sm btn-outline-dark flex-fill" do
+                %i.bi.bi-eye.me-1
+                View
+              - if organization != Current.organization
+                = button_to switch_organization_path(organization), method: :post, class: "btn btn-sm btn-primary flex-fill" do
+                  %i.bi.bi-arrow-repeat.me-1
+                  Switch
+- else
+  .card.shadow-sm
+    .card-body.text-center.py-5
+      %i.bi.bi-building.fs-1.text-muted.mb-3
+      %p.text-muted.mb-0 No organizations yet.
+

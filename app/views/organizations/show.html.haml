@@ -1,0 +1,79 @@
+.d-flex.justify-content-between.align-items-center.mb-4
+  .d-flex.align-items-center
+    = link_to organizations_path, class: "btn btn-outline-secondary btn-sm me-3" do
+      %i.bi.bi-arrow-left
+    %div
+      %h1.h3.mb-1= @organization.name
+      - membership = @organization.organization_memberships.find { |m| m.user_id == Current.user.id }
+      - if membership
+        %span.badge.bg-secondary
+          %i.bi.bi-person-badge.me-1
+          = membership.role.titleize
+      - if @organization == Current.organization
+        %span.badge.bg-primary.ms-2 Active
+  .d-flex.gap-2
+    - if membership&.owner?
+      = link_to edit_organization_path(@organization), class: "btn btn-outline-dark" do
+        %i.bi.bi-pencil.me-1
+        Edit
+      = button_to organization_path(@organization), method: :delete, class: "btn btn-outline-danger", form: { data: { turbo_confirm: "Are you sure? This will delete all projects and tasks." } } do
+        %i.bi.bi-trash.me-1
+        Delete
+
+.row.g-4.mb-4
+  .col-md-6
+    .card.shadow-sm.h-100
+      .card-body
+        .d-flex.justify-content-between.align-items-center.mb-3
+          %h5.card-title.mb-0
+            %i.bi.bi-people.me-2
+            Members
+            %span.badge.bg-secondary.ms-2= @members.count
+          - if membership&.owner? || membership&.admin?
+            = link_to new_organization_organization_membership_path(@organization), class: "btn btn-sm btn-dark" do
+              %i.bi.bi-plus-lg.me-1
+              Invite
+        - if @members.any?
+          .list-group.list-group-flush
+            - @members.each do |member_membership|
+              .list-group-item.px-0.d-flex.justify-content-between.align-items-center
+                %div
+                  .d-flex.align-items-center
+                    .rounded-circle.bg-dark.text-white.d-flex.align-items-center.justify-content-center.me-3{ style: "width: 40px; height: 40px; font-size: 16px;" }
+                      = member_membership.user.name.first.upcase
+                    %div
+                      %strong= member_membership.user.name
+                      %br
+                      %small.text-muted= member_membership.user.email_address
+                %span.badge.bg-secondary= member_membership.role.titleize
+
+  .col-md-6
+    .card.shadow-sm.h-100
+      .card-body
+        .d-flex.justify-content-between.align-items-center.mb-3
+          %h5.card-title.mb-0
+            %i.bi.bi-folder.me-2
+            Projects
+            %span.badge.bg-secondary.ms-2= @projects.count
+          - if @organization == Current.organization
+            = link_to new_project_path, class: "btn btn-sm btn-dark" do
+              %i.bi.bi-plus-lg.me-1
+              New
+        - if @projects.any?
+          .list-group.list-group-flush
+            - @projects.each do |project|
+              .list-group-item.px-0
+                .d-flex.justify-content-between.align-items-center
+                  %div
+                    = link_to project.title, project, class: "text-decoration-none fw-semibold"
+                    %br
+                    %small.text-muted
+                      %i.bi.bi-list-task.me-1
+                      = pluralize(project.tasks.count, "task")
+                  = link_to project, class: "btn btn-sm btn-outline-dark" do
+                    %i.bi.bi-arrow-right
+        - else
+          .text-center.py-4
+            %i.bi.bi-folder.fs-2.text-muted.mb-2
+            %p.text-muted.small.mb-0 No projects yet
+

@@ -9,6 +9,11 @@ Rails.application.routes.draw do
   get "search", to: "search#index", as: :search
   resource :profile, only: [ :show, :edit, :update ]
 
+  resources :organizations do
+    post :switch, on: :member
+    resources :organization_memberships, only: [ :new, :create, :destroy ], shallow: true
+  end
+
   resources :projects do
     member do
       get :kanban

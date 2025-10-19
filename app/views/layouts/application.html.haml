@@ -15,8 +15,11 @@
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
   %body.bg-white.text-dark
-    .d-md-none.bg-black.text-white.w-100.m-0.px-3.py-2
+    .d-md-none.bg-black.text-white.w-100.m-0.px-3.py-2.d-flex.justify-content-between.align-items-center
       = image_tag "taskablanca_logo.png", alt: "Taskablanca", height: 40
+      - if Current.organization
+        = link_to organizations_path, class: "text-white text-decoration-none", title: Current.organization.name do
+          %i.bi.bi-building.fs-5
     .container-fluid
       .row.min-vh-100
         .col-12.col-md-3.col-lg-2.p-0.bg-black.text-white.d-none.d-md-block
@@ -36,6 +39,19 @@
                 %a{ class: nav_link_class("tasks"), href: tasks_path }
                   %i.bi.bi-list-task.me-2
                   Tasks
+              %li.nav-item
+                %a{ class: nav_link_class("organizations"), href: organizations_path }
+                  %i.bi.bi-building.me-2
+                  Organizations
+            - if Current.organization
+              .mt-auto.pt-3.pb-3.border-top.border-secondary
+                .small.text-white-50.mb-2 Current Organization
+                .d-flex.justify-content-between.align-items-center.bg-dark.rounded.px-3.py-2
+                  .text-truncate.pe-2{ title: Current.organization.name }
+                    %i.bi.bi-building.me-2
+                    %span.fw-semibold= Current.organization.name
+                  = link_to organizations_path, class: "btn btn-sm btn-outline-light", title: "Switch organization" do
+                    %i.bi.bi-arrow-repeat
         .col-12.col-md-9.col-lg-10.p-0
           .d-flex.flex-column.h-100
             .bg-white.border-bottom.px-4.py-3
@@ -99,3 +115,7 @@
               %a{ class: "#{nav_link_class('tasks')} py-3", href: tasks_path }
                 %i.bi.bi-list-task
                 %span.d-block.small Tasks
+            %li.nav-item
+              %a{ class: "#{nav_link_class('organizations')} py-3", href: organizations_path }
+                %i.bi.bi-building
+                %span.d-block.small Orgs
