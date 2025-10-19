@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root "dashboard#show"
 
+  get "search", to: "search#index", as: :search
+
   resources :projects do
     member do
       get :kanban

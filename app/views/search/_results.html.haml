@@ -1,0 +1,34 @@
+- if @results[:tasks].any? || @results[:projects].any?
+  - if @results[:tasks].any?
+    .mb-3
+      %h6.text-muted.mb-2
+        %i.bi.bi-list-task.me-1
+        Tasks (#{@results[:tasks].count})
+      .list-group.list-group-flush
+        - @results[:tasks].each do |task|
+          = link_to task_path(task), class: "list-group-item list-group-item-action border-0 py-2", data: { turbo_frame: "_top" } do
+            .d-flex.justify-content-between.align-items-start
+              .flex-grow-1
+                %h6.mb-1= task.title
+                %small.text-muted= task.project.title
+              %span.badge{class: "bg-#{task.status == 'done' ? 'success' : task.status == 'in_progress' ? 'warning' : 'secondary'}"}
+                = task.status.humanize
+
+  - if @results[:projects].any?
+    .mb-3
+      %h6.text-muted.mb-2
+        %i.bi.bi-folder.me-1
+        Projects (#{@results[:projects].count})
+      .list-group.list-group-flush
+        - @results[:projects].each do |project|
+          = link_to project_path(project), class: "list-group-item list-group-item-action border-0 py-2", data: { turbo_frame: "_top" } do
+            .d-flex.justify-content-between.align-items-start
+              .flex-grow-1
+                %h6.mb-1= project.title
+                - if project.description.present?
+                  %small.text-muted= truncate(project.description, length: 60)
+              %small.text-muted= pluralize(project.tasks.count, 'task')
+- else
+  .text-center.py-4
+    %i.bi.bi-search.text-muted{style: "font-size: 2rem;"}
+    %p.text-muted.mb-0 No results found for "#{@query}"

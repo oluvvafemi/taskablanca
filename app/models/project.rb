@@ -6,4 +6,13 @@ class Project < ApplicationRecord
   has_many :users, through: :project_memberships
 
   validates :title, presence: true, uniqueness: { scope: :organization_id }
+
+  scope :search, ->(query) {
+    return all if query.blank?
+
+    where(
+      "title ILIKE ? OR description ILIKE ?",
+      "%#{query}%", "%#{query}%"
+    )
+  }
 end

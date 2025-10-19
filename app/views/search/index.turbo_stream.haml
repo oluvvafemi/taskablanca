@@ -1,0 +1,5 @@
+= turbo_stream.replace "search-results" do
+  - if @query.present?
+    = render "results"
+  - else
+    .p-3{style: "display: none;"}

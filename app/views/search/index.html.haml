@@ -1,0 +1,6 @@
+= turbo_frame_tag "search-results" do
+  - if @query.present?
+    .p-3
+      = render "results"
+  - else
+    .p-3{ style: "display: none;" }

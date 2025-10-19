@@ -9,4 +9,13 @@ class Task < ApplicationRecord
 
   enum :status, %w[ todo in_progress done ].index_by(&:itself),
        validate: true, default: "todo"
+
+  scope :search, ->(query) {
+    return all if query.blank?
+
+    where(
+      "title ILIKE ? OR description ILIKE ?",
+      "%#{query}%", "%#{query}%"
+    )
+  }
 end

@@ -40,11 +40,27 @@
           .d-flex.flex-column.h-100
             .bg-white.border-bottom.px-4.py-3
               .d-flex.justify-content-between.align-items-center
-                .me-3{style: "max-width: 500px; width: 100%;"}
-                  .input-group
-                    %span.input-group-text.bg-white.border-end-0
-                      %i.bi.bi-search
-                    %input.form-control.border-start-0{type: "search", placeholder: "Search tasks, projects...", "aria-label": "Search"}
+                .me-3{ style: "max-width: 500px; width: 100%; position: relative;", data: { controller: "search" } }
+                  = form_with url: search_path,
+                              method: :get,
+                              data: { search_target: "form", turbo_frame: "search-results" },
+                              class: "w-100" do |form|
+                    .input-group
+                      %span.input-group-text.bg-white.border-end-0
+                        %i.bi.bi-search
+                      = form.search_field :q,
+                        value: params[:q],
+                        placeholder: "Search tasks, projects...",
+                        "aria-label": "Search",
+                        class: "form-control border-start-0",
+                        data: { action: "input->search#queryChanged", search_target: "input" }
+
+                  = turbo_frame_tag "search-results",
+                      class: "search-results-dropdown position-absolute w-100 bg-white border rounded shadow-sm",
+                      style: "top: 100%; left: 0; z-index: 1000; max-height: 300px; overflow-y: auto; display: none;",
+                      data: { search_target: "results" }
+
+
                 .d-flex.align-items-center.gap-2.ms-auto
                   %span.d-none.d-md-inline.text-muted= Current.user.name
                   .rounded-circle.bg-dark.text-white.d-flex.align-items-center.justify-content-center{style: "width: 40px; height: 40px;"}
