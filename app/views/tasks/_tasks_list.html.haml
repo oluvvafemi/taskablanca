@@ -29,7 +29,7 @@
                   - else
                     %span.text-muted Unassigned
                 %td
-                  = link_to "View", task_path(task), class: "btn btn-sm btn-outline-dark"
+                  = link_to "View", task_path(task), class: "btn btn-sm btn-outline-dark", data: { turbo_frame: "_top" }
 - else
   .card.shadow-sm
     .card-body.text-center.py-5
