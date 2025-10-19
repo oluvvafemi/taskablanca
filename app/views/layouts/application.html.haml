@@ -50,6 +50,14 @@
                   .rounded-circle.bg-dark.text-white.d-flex.align-items-center.justify-content-center{style: "width: 40px; height: 40px;"}
                     = Current.user.name.first.upcase
             .flex-grow-1.p-4.pb-md-4.mobile-bottom-padding
+              - if flash[:notice]
+                .alert.alert-success.alert-dismissible.fade.show{ role: "alert" }
+                  = flash[:notice]
+                  %button.btn-close{ type: "button", "data-bs-dismiss": "alert", "aria-label": "Close" }
+              - if flash[:alert]
+                .alert.alert-danger.alert-dismissible.fade.show{ role: "alert" }
+                  = flash[:alert]
+                  %button.btn-close{ type: "button", "data-bs-dismiss": "alert", "aria-label": "Close" }
               = yield
       .d-md-none.position-fixed.bottom-0.start-0.end-0.bg-black.text-white.border-top
         %nav
