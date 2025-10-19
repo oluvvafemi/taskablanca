@@ -16,9 +16,17 @@
     - else
       %span.text-muted Unassigned
   %td.text-nowrap
-    = link_to "View", task_path(task), class: "btn btn-sm btn-outline-dark me-1", data: { turbo_frame: "_top" }
-    = link_to edit_task_path(task, project_id: task.project_id), class: "btn btn-sm btn-outline-secondary me-1", data: { turbo_frame: "edit_task" } do
-      %i.bi.bi-pencil
-    = button_to task_path(task), method: :delete, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } do
-      %i.bi.bi-trash
+    .d-flex.gap-1
+      = link_to task_path(task), class: "btn btn-sm btn-outline-dark", data: { turbo_frame: "_top" }, title: "View task" do
+        %i.bi.bi-eye
+      - if task.users.include?(Current.user)
+        = link_to edit_task_path(task, project_id: task.project_id), class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "edit_task" } do
+          %i.bi.bi-pencil
+        = button_to task_path(task), method: :delete, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } do
+          %i.bi.bi-trash
+      - else
+        = link_to edit_task_path(task, project_id: task.project_id), class: "btn btn-sm btn-outline-secondary disabled", data: { turbo_frame: "edit_task" }, style: "opacity: 0.5; pointer-events: none;" do
+          %i.bi.bi-pencil
+        = button_to task_path(task), method: :delete, class: "btn btn-sm btn-outline-danger disabled", form: { data: { turbo_confirm: "Are you sure?" } }, style: "opacity: 0.5; pointer-events: none;" do
+          %i.bi.bi-trash
 
