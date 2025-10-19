@@ -1,0 +1,51 @@
+.d-flex.justify-content-between.align-items-center.mb-4
+  .d-flex.align-items-center
+    = link_to @task.project, class: "btn btn-outline-secondary btn-sm me-3" do
+      %i.bi.bi-arrow-left
+    %div
+      %h1.h3.mb-1= @task.title
+      - if @task.status == "todo"
+        %span.badge.bg-secondary Todo
+      - elsif @task.status == "in_progress"
+        %span.badge.bg-dark In Progress
+      - elsif @task.status == "done"
+        %span.badge.bg-success Done
+  .d-flex.gap-2
+    = link_to edit_task_path(@task), class: "btn btn-outline-dark" do
+      %i.bi.bi-pencil.me-1
+      Edit
+    = button_to task_path(@task), method: :delete, class: "btn btn-outline-danger", form: { data: { turbo_confirm: "Are you sure you want to delete this task?" } } do
+      %i.bi.bi-trash.me-1
+      Delete
+
+.row.g-4.mb-4
+  .col-12.col-md-8
+    .card.shadow-sm
+      .card-body
+        %h5.card-title Description
+        %p.card-text= @task.description
+
+  .col-12.col-md-4
+    .card.shadow-sm.mb-3
+      .card-body
+        %h6.card-title.text-muted.mb-3
+          %i.bi.bi-folder.me-2
+          Project
+        %p.mb-0
+          = link_to @task.project.title, @task.project, class: "text-decoration-none text-dark fw-semibold"
+
+    .card.shadow-sm
+      .card-body
+        %h6.card-title.text-muted.mb-3
+          %i.bi.bi-people.me-2
+          Assigned To
+        - if @task.users.any?
+          %ul.list-unstyled.mb-0
+            - @task.users.each do |user|
+              %li.mb-2
+                %i.bi.bi-person-circle.me-2
+                = user.name
+        - else
+          %p.text-muted.mb-0
+            %em No one assigned yet
+
