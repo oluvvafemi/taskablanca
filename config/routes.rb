@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root "dashboard#show"
 
   get "search", to: "search#index", as: :search
+  resource :profile, only: [ :show, :edit, :update ]
 
   resources :projects do
     member do

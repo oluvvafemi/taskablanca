@@ -1,0 +1,50 @@
+.d-flex.justify-content-between.align-items-center.mb-4
+  %div
+    %h1.h3.mb-1 Profile
+    %span.badge.bg-light.text-dark= @user.organization.name
+  .d-flex.gap-2
+    = link_to edit_profile_path, class: "btn btn-outline-dark" do
+      %i.bi.bi-pencil.me-1
+      Edit Profile
+
+.row.g-4
+  .col-12.col-md-8
+    .card.shadow-sm.mb-4
+      .card-body
+        %h5.card-title
+          %i.bi.bi-person.me-2
+          Personal Information
+        .row.mb-3
+          .col-sm-3
+            %strong.text-muted Name:
+          .col-sm-9
+            = @user.name
+        .row.mb-3
+          .col-sm-3
+            %strong.text-muted Email:
+          .col-sm-9
+            = @user.email_address
+        .row.mb-3
+          .col-sm-3
+            %strong.text-muted Member since:
+          .col-sm-9
+            = @user.created_at.strftime("%B %d, %Y")
+
+  .col-12.col-md-4
+    .card.shadow-sm.mb-3
+      .card-body
+        %h6.card-title.text-muted.mb-3
+          %i.bi.bi-folder.me-2
+          Projects
+        %p.mb-0
+          %span.h4.text-dark.fw-bold= @user.projects.count
+          %span.text-muted.ms-1 projects
+
+    .card.shadow-sm
+      .card-body
+        %h6.card-title.text-muted.mb-3
+          %i.bi.bi-list-task.me-2
+          Tasks Assigned
+        %p.mb-0
+          %span.h4.text-dark.fw-bold= @user.tasks.count
+          %span.text-muted.ms-1 tasks

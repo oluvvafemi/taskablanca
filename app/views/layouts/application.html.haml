@@ -62,9 +62,18 @@
 
 
                 .d-flex.align-items-center.gap-2.ms-auto
-                  %span.d-none.d-md-inline.text-muted= Current.user.name
-                  .rounded-circle.bg-dark.text-white.d-flex.align-items-center.justify-content-center{style: "width: 40px; height: 40px;"}
-                    = Current.user.name.first.upcase
+                  .dropdown
+                    %button.btn.btn-link.text-decoration-none.text-dark.dropdown-toggle.d-flex.align-items-center{ type: "button", "data-bs-toggle": "dropdown", "aria-expanded": "false" }
+                      %span.d-none.d-md-inline.me-2= Current.user.name
+                      .rounded-circle.bg-dark.text-white.d-flex.align-items-center.justify-content-center{style: "width: 32px; height: 32px; font-size: 14px;"}
+                        = Current.user.name.first.upcase
+                    %ul.dropdown-menu.dropdown-menu-end
+                      %li
+                        = link_to "Profile", profile_path, class: "dropdown-item"
+                      %li
+                        %hr.dropdown-divider
+                      %li
+                        = button_to "Sign Out", session_path, method: :delete, class: "dropdown-item text-danger border-0 bg-transparent w-100 text-start"
             .flex-grow-1.p-4.pb-md-4.mobile-bottom-padding
               - if flash[:notice]
                 .alert.alert-success.alert-dismissible.fade.show{ role: "alert" }
