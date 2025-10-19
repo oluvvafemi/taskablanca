@@ -1,0 +1,5 @@
+= turbo_stream.replace dom_id(@task) do
+  = render "tasks/task_row", task: @task
+
+= turbo_stream.update "edit_task", ""
+

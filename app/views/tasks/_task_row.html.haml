@@ -1,0 +1,24 @@
+%tr{ id: dom_id(task) }
+  %td
+    %strong= task.title
+    %br/
+    %small.text-muted= truncate(task.description, length: 80)
+  %td
+    - if task.status == "todo"
+      %span.badge.bg-secondary Todo
+    - elsif task.status == "in_progress"
+      %span.badge.bg-dark In Progress
+    - elsif task.status == "done"
+      %span.badge.bg-success Done
+  %td
+    - if task.users.any?
+      = task.users.map(&:name).join(", ")
+    - else
+      %span.text-muted Unassigned
+  %td.text-nowrap
+    = link_to "View", task_path(task), class: "btn btn-sm btn-outline-dark me-1", data: { turbo_frame: "_top" }
+    = link_to edit_task_path(task, project_id: task.project_id), class: "btn btn-sm btn-outline-secondary me-1", data: { turbo_frame: "edit_task" } do
+      %i.bi.bi-pencil
+    = button_to task_path(task), method: :delete, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } do
+      %i.bi.bi-trash
+

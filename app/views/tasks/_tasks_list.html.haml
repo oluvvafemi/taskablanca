@@ -11,25 +11,7 @@
               %th Actions
           %tbody
             - tasks.each do |task|
-              %tr
-                %td
-                  %strong= task.title
-                  %br/
-                  %small.text-muted= truncate(task.description, length: 80)
-                %td
-                  - if task.status == "todo"
-                    %span.badge.bg-secondary Todo
-                  - elsif task.status == "in_progress"
-                    %span.badge.bg-dark In Progress
-                  - elsif task.status == "done"
-                    %span.badge.bg-success Done
-                %td
-                  - if task.users.any?
-                    = task.users.map(&:name).join(", ")
-                  - else
-                    %span.text-muted Unassigned
-                %td
-                  = link_to "View", task_path(task), class: "btn btn-sm btn-outline-dark", data: { turbo_frame: "_top" }
+              = render "tasks/task_row", task: task
 - else
   .card.shadow-sm
     .card-body.text-center.py-5

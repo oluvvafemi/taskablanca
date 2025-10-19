@@ -5,7 +5,13 @@
         %i.bi.bi-arrow-left
       %h1.h3.mb-0 Edit Task
 
-    .card.shadow-sm
-      .card-body
-        = render "form", task: @task
+    - if @project_inline_edit
+      = turbo_frame_tag "edit_task" do
+        .card.shadow-sm
+          .card-body
+            = render "form", task: @task
+    - else 
+      .card.shadow-sm
+        .card-body
+          = render "form", task: @task
 

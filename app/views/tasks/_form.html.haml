@@ -7,8 +7,8 @@
           %li= message
       %button.btn-close{ type: "button", "data-bs-dismiss": "alert", "aria-label": "Close" }
 
-  - if defined?(@project) && @project
-    = f.hidden_field :project_id, value: @project.id
+  - if @project_inline_edit
+    = f.hidden_field :project_id, value: @project_id
   - else
     .mb-3
       = f.label :project_id, "Project", class: "form-label"
@@ -28,8 +28,8 @@
 
   .d-flex.gap-2
     = f.submit class: "btn btn-dark"
-    - if defined?(@project) && @project
-      = link_to "Cancel", project_path(@project), class: "btn btn-outline-secondary"
+    - if @project_inline_edit
+      = link_to "Cancel", project_path(@project_id), class: "btn btn-outline-secondary"
     - else
       = link_to "Cancel", task.persisted? ? task_path(task) : tasks_path, class: "btn btn-outline-secondary"
 

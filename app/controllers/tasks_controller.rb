@@ -11,8 +11,10 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @task.project_id = params[:project_id] if params[:project_id]
-    @project = Current.user.projects.find(params[:project_id]) if params[:project_id]
+    if params[:project_id]
+      @project_inline_edit = true
+      @project_id = params[:project_id]
+    end
   rescue ActiveRecord::RecordNotFound
     redirect_to projects_path, alert: "Project not found or you don't have access."
   end
@@ -41,20 +43,31 @@ class TasksController < ApplicationController
   end
 
   def edit
+    if params[:project_id]
+      @project_inline_edit = true
+      @project_id = params[:project_id]
+    end
   end
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: "Task was successfully updated."
+      respond_to do |format|
+        format.html { redirect_to @task, notice: "Task was successfully updated." }
+        format.turbo_stream
+      end
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    project = @task.project
+    @project = @task.project
     @task.destroy
-    redirect_to project_path(project), notice: "Task was successfully deleted."
+
+    respond_to do |format|
+      format.html { redirect_to project_path(@project), notice: "Task was successfully deleted." }
+      format.turbo_stream
+    end
   end
 
   private
