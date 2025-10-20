@@ -1,24 +1,76 @@
-# README
+# Taskablanca
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A multi-organization task management application.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- **Multi-Organization Support**: Users can create and be added to multiple organizations
+- **Role-Based Access**: Owner, Admin, and Member roles
+- **Project Management**: Create and manage projects within organizations
+- **Task Tracking**: Kanban-style task management
+- **User Registration**: Account creation with automatic organization setup
+- **Account Closure**: Safe account deletion with ownership checks
 
-* System dependencies
+## Development
 
-* Configuration
+### Prerequisites
 
-* Database creation
+- Ruby 3.3.5+
+- PostgreSQL 14+
 
-* Database initialization
+### Local Setup
 
-* How to run the test suite
+1. **Install dependencies**
 
-* Services (job queues, cache servers, search engines, etc.)
+   ```bash
+   bundle install
+   yarn install
+   yarn build
+   yarn build:css
+   ```
 
-* Deployment instructions
+2. **Setup database**
 
-* ...
+   ```bash
+   bin/rails db:create
+   bin/rails db:migrate
+   bin/rails db:seed
+   ```
+
+3. **Start server**
+
+   ```bash
+   bin/dev
+   ```
+
+4. **Access the app**
+   - http://localhost:3000
+   - Test users: ada@hotwirelabs.dev / password
+
+### Testing
+
+```bash
+bin/rails test
+```
+
+## Docker Deployment
+
+### One-Command Deployment
+
+```bash
+docker-compose up -d
+```
+
+This starts:
+
+- Rails app (port 3000)
+- PostgreSQL (port 5432)
+
+### Environment Variables
+
+Create `.env` file:
+
+```env
+POSTGRES_PASSWORD=your_password
+RAILS_MASTER_KEY=your_master_key
+```

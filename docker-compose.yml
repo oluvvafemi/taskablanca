@@ -1,0 +1,38 @@
+services:
+  web:
+    build: .
+    container_name: taskablanca
+    ports:
+      - "80:80"
+    environment:
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      DATABASE_URL: postgres://taskablanca:${TASKABLANCA_DATABASE_PASSWORD}@db:5432/taskablanca_production
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - log_data:/rails/log
+      - storage_data:/rails/storage
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    container_name: taskablanca_db
+    environment:
+      POSTGRES_USER: taskablanca
+      POSTGRES_PASSWORD: ${TASKABLANCA_DATABASE_PASSWORD}
+      POSTGRES_DB: taskablanca_production
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskablanca"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  log_data:
+  storage_data:
