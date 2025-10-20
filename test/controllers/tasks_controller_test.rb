@@ -347,7 +347,7 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Task.count", -1) do
       delete task_url(task)
     end
-    assert_redirected_to project_path(project)
+    assert_redirected_to tasks_path
   end
 
   test "should not destroy task user doesn't have access to" do
@@ -365,6 +365,6 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     project = task.project
 
     delete task_url(task)
-    assert_redirected_to project_path(project)
+    assert_redirected_to tasks_path
   end
 end
