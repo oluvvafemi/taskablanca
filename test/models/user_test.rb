@@ -7,52 +7,48 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "should require name" do
-    user = User.new(email_address: "test@example.com", password: "password", organization: organizations(:acme))
+    user = User.new(email_address: "test@example.com", password: "password")
     assert_not user.valid?
     assert_includes user.errors[:name], "can't be blank"
   end
 
   test "should require email_address" do
-    user = User.new(name: "Test User", password: "password", organization: organizations(:acme))
+    user = User.new(name: "Test User", password: "password")
     assert_not user.valid?
     assert_includes user.errors[:email_address], "can't be blank"
   end
 
   test "should require unique email_address" do
     existing_user = users(:alice)
-    user = User.new(name: "Another User", email_address: existing_user.email_address,
-                    password: "password", organization: organizations(:acme))
+    user = User.new(name: "Another User", email_address: existing_user.email_address, password: "password")
     assert_not user.valid?
     assert_includes user.errors[:email_address], "has already been taken"
   end
 
   test "should normalize email_address by downcasing" do
-    user = User.create!(name: "Test User", email_address: "TEST@EXAMPLE.COM",
-                        password: "password", organization: organizations(:acme))
+    user = User.create!(name: "Test User", email_address: "TEST@EXAMPLE.COM", password: "password")
     assert_equal "test@example.com", user.email_address
   end
 
   test "should normalize email_address by stripping whitespace" do
-    user = User.create!(name: "Test User", email_address: "  test@example.com  ",
-                        password: "password", organization: organizations(:acme))
+    user = User.create!(name: "Test User", email_address: "  test@example.com  ", password: "password")
     assert_equal "test@example.com", user.email_address
   end
 
   test "should require password on creation" do
-    user = User.new(name: "Test User", email_address: "test@example.com", organization: organizations(:acme))
+    user = User.new(name: "Test User", email_address: "test@example.com")
     assert_not user.valid?
     assert_includes user.errors[:password], "can't be blank"
   end
 
-  test "should belong to organization" do
+  test "should have organizations through memberships" do
     user = users(:alice)
-    assert_instance_of Organization, user.organization
-    assert_equal organizations(:acme), user.organization
+    assert user.organizations.any?
+    assert_includes user.organizations, organizations(:acme)
   end
 
   test "destroys associated sessions when user is destroyed" do
-    org = Organization.create!(name: "Temp Org for Sessions")
-    user = User.create!(name: "Temp User", email_address: "temp_sessions@example.com", password: "password", organization: org)
+    user = User.create!(name: "Temp User", email_address: "temp_sessions@example.com", password: "password")
     user.sessions.create!(user_agent: "Test Agent", ip_address: "127.0.0.1")
 
     assert_difference "Session.count", -1 do
@@ -63,7 +59,7 @@ class UserTest < ActiveSupport::TestCase
   test "destroys associated project_memberships when user is destroyed" do
     org = Organization.create!(name: "Temp Org for Memberships")
     project = Project.create!(title: "Temp Project", description: "Desc", organization: org)
-    user = User.create!(name: "Temp User", email_address: "temp_members@example.com", password: "password", organization: org)
+    user = User.create!(name: "Temp User", email_address: "temp_members@example.com", password: "password")
     user.project_memberships.create!(project: project)
 
     assert_difference "ProjectMembership.count", -1 do
@@ -75,7 +71,7 @@ class UserTest < ActiveSupport::TestCase
     org = Organization.create!(name: "Temp Org for Assignments")
     project = Project.create!(title: "Temp Project A", description: "Desc", organization: org)
     task = Task.create!(title: "Temp Task", description: "Desc", project: project)
-    user = User.create!(name: "Temp User", email_address: "temp_assign@example.com", password: "password", organization: org)
+    user = User.create!(name: "Temp User", email_address: "temp_assign@example.com", password: "password")
     user.task_assignments.create!(task: task)
 
     assert_difference "TaskAssignment.count", -1 do

@@ -1,0 +1,20 @@
+alice_acme_owner:
+  user: alice
+  organization: acme
+  role: 2
+
+charlie_acme_member:
+  user: charlie
+  organization: acme
+  role: 0
+
+bob_stark_owner:
+  user: bob
+  organization: stark
+  role: 2
+
+diana_wayne_owner:
+  user: diana
+  organization: wayne
+  role: 2
+
