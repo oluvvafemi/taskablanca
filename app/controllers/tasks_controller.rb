@@ -75,7 +75,7 @@ class TasksController < ApplicationController
     handle_kanban_context
 
     respond_to do |format|
-      format.html { redirect_to project_path(@project), notice: "Task was successfully deleted." }
+      format.html { redirect_to tasks_path, notice: "Task was successfully deleted." }
       format.turbo_stream
     end
   end
