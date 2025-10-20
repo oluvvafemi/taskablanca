@@ -81,6 +81,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    host: db
     database: taskablanca_production
     username: taskablanca
     password: <%= ENV["TASKABLANCA_DATABASE_PASSWORD"] %>

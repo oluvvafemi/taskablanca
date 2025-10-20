@@ -7,7 +7,7 @@ services:
     environment:
       RAILS_ENV: production
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      DATABASE_URL: postgres://taskablanca:${TASKABLANCA_DATABASE_PASSWORD}@db:5432/taskablanca_production
+      TASKABLANCA_DATABASE_PASSWORD: ${TASKABLANCA_DATABASE_PASSWORD}
     depends_on:
       db:
         condition: service_healthy
@@ -26,7 +26,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U taskablanca"]
+      test: ["CMD-SHELL", "pg_isready -U taskablanca -d taskablanca_production"]
       interval: 10s
       timeout: 5s
       retries: 5
