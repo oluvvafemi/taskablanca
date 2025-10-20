@@ -2,8 +2,8 @@ services:
   web:
     build: .
     container_name: taskablanca
-    ports:
-      - "80:80"
+    expose:
+      - "80"
     environment:
       RAILS_ENV: production
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
