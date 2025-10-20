@@ -1,4 +1,8 @@
-= form_with(model: task, local: true, class: "needs-validation") do |f|
+- form_options = { model: task, class: "needs-validation" }
+- unless @project_inline_edit
+  - form_options[:local] = true
+  - form_options[:url] = task.persisted? ? task_path(task, format: :html) : tasks_path(format: :html)
+= form_with(**form_options) do |f|
   - if task.errors.any?
     .alert.alert-danger.alert-dismissible.fade.show{ role: "alert" }
       %h5.alert-heading Oops! There were some errors:
