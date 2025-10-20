@@ -3,7 +3,10 @@ class TasksController < ApplicationController
   before_action :load_projects, only: %i[new edit create update]
 
   def index
-    @tasks = Current.user.tasks.includes(:project)
+    @tasks = Current.user.tasks
+                        .joins(:project)
+                        .where(projects: { organization_id: Current.organization&.id })
+                        .includes(:project)
   end
 
   def show
@@ -80,13 +83,18 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @task = Current.user.tasks.find(params[:id])
+    @task = Current.user.tasks
+                         .joins(:project)
+                         .where(projects: { organization_id: Current.organization&.id })
+                         .find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to tasks_path, alert: "Task not found or you don't have access."
   end
 
   def load_projects
-    @projects = Current.user.projects.order(:title)
+    @projects = Current.user.projects
+                               .where(organization: Current.organization)
+                               .order(:title)
   end
 
   def task_params

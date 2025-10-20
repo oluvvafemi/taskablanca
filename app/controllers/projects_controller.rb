@@ -2,7 +2,9 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show edit update destroy kanban]
 
   def index
-    @projects = Current.user.projects.includes(:organization, :tasks)
+    @projects = Current.user.projects
+                           .where(organization: Current.organization)
+                           .includes(:organization, :tasks)
   end
 
   def show
@@ -50,7 +52,9 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    @project = Current.user.projects.find(params[:id])
+    @project = Current.user.projects
+                             .where(organization: Current.organization)
+                             .find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to projects_path, alert: "Project not found or you don't have access."
   end

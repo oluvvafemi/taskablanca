@@ -11,7 +11,7 @@ class Project < ApplicationRecord
     return all if query.blank?
 
     where(
-      "title ILIKE ? OR description ILIKE ?",
+      "projects.title ILIKE ? OR projects.description ILIKE ?",
       "%#{query}%", "%#{query}%"
     )
   }

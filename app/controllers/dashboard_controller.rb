@@ -1,8 +1,13 @@
 class DashboardController < ApplicationController
   def show
     @user = Current.user
-    @projects = @user.projects.includes(:tasks)
-    @tasks = @user.tasks.includes(:project)
+    @projects = @user.projects
+                      .where(organization: Current.organization)
+                      .includes(:tasks)
+    @tasks = @user.tasks
+                  .joins(:project)
+                  .where(projects: { organization_id: Current.organization&.id })
+                  .includes(:project)
 
     @total_projects = @projects.count
     @total_tasks = @tasks.count

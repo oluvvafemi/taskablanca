@@ -14,7 +14,7 @@ class Task < ApplicationRecord
     return all if query.blank?
 
     where(
-      "title ILIKE ? OR description ILIKE ?",
+      "tasks.title ILIKE ? OR tasks.description ILIKE ?",
       "%#{query}%", "%#{query}%"
     )
   }

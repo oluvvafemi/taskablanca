@@ -5,10 +5,13 @@ class SearchController < ApplicationController
 
     if @query.present?
       @results[:tasks] = Current.user.tasks
+                                  .joins(:project)
+                                  .where(projects: { organization_id: Current.organization&.id })
                                   .includes(:project, :users)
                                   .search(@query)
                                   .limit(10)
       @results[:projects] = Current.user.projects
+                                    .where(organization: Current.organization)
                                     .includes(:organization)
                                     .search(@query)
                                     .limit(10)
