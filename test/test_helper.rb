@@ -15,9 +15,13 @@ module ActiveSupport
 end
 
 module AuthTestHelpers
-  def sign_in_as(user, password: "password")
+  def sign_in_as(user, password: "password", organization: nil)
     post session_url, params: { email_address: user.email_address, password: password }
     assert_response :redirect
+    
+    org = organization || user.organizations.first
+    session[:current_organization_id] = org.id if org
+    
     follow_redirect!
   end
 end
