@@ -23,7 +23,7 @@
     .container-fluid
       .row.min-vh-100
         .col-12.col-md-3.col-lg-2.p-0.bg-black.text-white.d-none.d-md-block
-          .d-flex.flex-column.flex-shrink-0.px-3.h-100
+          .d-flex.flex-column.flex-shrink-0.px-3.h-100.sidebar-container
             %a.d-flex.align-items-center.mb-4.me-md-auto.text-white.text-decoration-none.mt-4{ href: root_path }
               = image_tag "taskablanca_logo.png", alt: "Taskablanca", class: "me-2", height: 52
             %ul.nav.nav-pills.flex-column.mb-auto
@@ -44,7 +44,7 @@
                   %i.bi.bi-building.me-2
                   Organizations
             - if Current.organization
-              .mt-auto.pt-3.pb-3.border-top.border-secondary
+              .mt-auto.pt-3.pb-3.border-top.border-secondary.sidebar-org
                 .small.text-white-50.mb-2 Current Organization
                 .d-flex.justify-content-between.align-items-center.bg-dark.rounded.px-3.py-2
                   .text-truncate.pe-2{ title: Current.organization.name }
