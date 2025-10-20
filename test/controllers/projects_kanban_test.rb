@@ -51,7 +51,7 @@ class ProjectsKanbanTest < ActionDispatch::IntegrationTest
   end
 
   test "should display empty state for columns with no tasks" do
-    empty_project = @user.organization.projects.create!(
+    empty_project = @user.organizations.first.projects.create!(
       title: "Empty Project",
       description: "A project with no tasks"
     )

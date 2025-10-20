@@ -60,10 +60,10 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     new_user = User.create!(
       name: "New User",
       email_address: "newuser@example.com",
-      password: "password",
-      organization: new_org
+      password: "password"
     )
-    sign_in_as(new_user)
+    OrganizationMembership.create!(user: new_user, organization: new_org, role: :member)
+    sign_in_as(new_user, organization: new_org)
 
     get projects_url
     assert_response :success
@@ -111,7 +111,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     new_project = Project.last
-    assert_equal @user.organization, new_project.organization
+    assert_includes @user.organizations, new_project.organization
   end
 
   test "creator should be automatically added as project member" do

@@ -69,10 +69,10 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     new_user = User.create!(
       name: "Empty User",
       email_address: "emptyuser@example.com",
-      password: "password",
-      organization: new_org
+      password: "password"
     )
-    sign_in_as(new_user)
+    OrganizationMembership.create!(user: new_user, organization: new_org, role: :member)
+    sign_in_as(new_user, organization: new_org)
 
     get tasks_url
     assert_response :success
