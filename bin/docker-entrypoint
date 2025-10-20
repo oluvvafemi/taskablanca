@@ -9,6 +9,11 @@ fi
 # If running the rails server then create or migrate existing database
 if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
   ./bin/rails db:prepare
+  # Seed only on first boot (no organizations yet)
+  if ! ./bin/rails runner "exit Organization.exists? ? 0 : 1"; then
+    echo "== Seeding database (first boot) =="
+    ./bin/rails db:seed || true
+  fi
 fi
 
 exec "${@}"

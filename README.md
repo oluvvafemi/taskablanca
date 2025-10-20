@@ -80,7 +80,7 @@ docker-compose up -d
 
 This starts:
 
-- Rails app (port 3000)
+- Rails app (port 3001 → container 80)
 - PostgreSQL (port 5432)
 
 ### Environment Variables
@@ -88,7 +88,7 @@ This starts:
 Create `.env` file:
 
 ```env
-POSTGRES_PASSWORD=your_password
+TASKABLANCA_DATABASE_PASSWORD=your_password
 RAILS_MASTER_KEY=your_master_key
 ```
 
@@ -98,4 +98,4 @@ Designed for containerized deployment; tested with Coolify behind a Traefik reve
 
 Any platform that supports Docker should work (Fly.io, Render, etc.).
 
-Ensure env vars above are set and that db:prepare runs on release.
+Ensure env vars above are set. The container runs `db:prepare` automatically; on first boot (empty DB), it will also run `db:seed` automatically.
