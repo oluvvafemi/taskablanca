@@ -1,35 +1,50 @@
 # Taskablanca
 
-A multi-organization task management application.
+A multi-organization task management app for teams, featuring Kanban boards, real-time UI updates, and role-based access.
 
-**Live Demo**: [https://taskablanca.chrisadebiyi.com/](https://taskablanca.chrisadebiyi.com/)
+**Live Demo:** https://taskablanca.chrisadebiyi.com/
+
+> Demo account: `ada@hotwirelabs.dev / password`  
+> Or sign up and create your own organization.
 
 ## Features
 
-- **Multi-Organization Support**: Users can create and be added to multiple organizations
-- **Role-Based Access**: Owner, Admin, and Member roles
-- **Project Management**: Create and manage projects within organizations
-- **Task Tracking**: Kanban-style task management
-- **User Registration**: Account creation with automatic organization setup
-- **Account Closure**: Safe account deletion with ownership checks
+- **Multi-organization**: Users can belong to multiple orgs.
+- **Role-based access**: Owner, Admin, Member.
+- **Projects & tasks**: Kanban-style workflow with CRUD.
+- **Real-time UI**: Hotwire (Turbo Frames & Streams).
+- **Auth**: Native Rails authentication (Rails 8+).
+- **Search**: Live search for tasks and projects.
+- **Account lifecycle**: Self-service signup and safe account deletion.
+- **Seed data**: Quick bootstrapping for demos/evaluation.
 
-## Development
+## Tech Stack
+
+- **Backend**: Ruby on Rails 8.x, PostgreSQL
+- **Frontend**: Hotwire, Haml templates, Bootstrap & Bootstrap Icons
+- **Tests**: Minitest (unit & integration)
+- **Containerization**: Docker & docker-compose
+
+---
+
+## Quick Start (Local)
 
 ### Prerequisites
 
-- Ruby 3.3.5+
-- PostgreSQL 14+
+- Ruby **3.3.5+**
+- PostgreSQL **14+**
+- Node.js & Yarn
 
-### Local Setup
+### Setup
 
-1. **Install dependencies**
+1. **Install deps**
 
-   ```bash
-   bundle install
-   yarn install
-   yarn build
-   yarn build:css
-   ```
+```bash
+bundle install
+yarn install
+yarn build
+yarn build:css
+```
 
 2. **Setup database**
 
@@ -76,3 +91,11 @@ Create `.env` file:
 POSTGRES_PASSWORD=your_password
 RAILS_MASTER_KEY=your_master_key
 ```
+
+## Deployment Notes
+
+Designed for containerized deployment; tested with Coolify behind a Traefik reverse proxy.
+
+Any platform that supports Docker should work (Fly.io, Render, etc.).
+
+Ensure env vars above are set and that db:prepare runs on release.
