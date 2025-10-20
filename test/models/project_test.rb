@@ -51,7 +51,7 @@ class ProjectTest < ActiveSupport::TestCase
   test "destroys associated project_memberships when project is destroyed" do
     org = Organization.create!(name: "Temp Org for Project Memberships")
     project = Project.create!(title: "Temp Project 2", description: "Desc", organization: org)
-    user = User.create!(name: "Temp User", email_address: "temp_proj_mem@example.com", password: "password", organization: org)
+    user = User.create!(name: "Temp User", email_address: "temp_proj_mem@example.com", password: "password")
     project.project_memberships.create!(user: user)
 
     assert_difference "ProjectMembership.count", -1 do

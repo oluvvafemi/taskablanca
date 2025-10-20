@@ -73,7 +73,7 @@ class TaskTest < ActiveSupport::TestCase
     org = Organization.create!(name: "Temp Org for Task Assignments")
     project = Project.create!(title: "Temp Project", description: "Desc", organization: org)
     task = Task.create!(title: "Temp Task", description: "Desc", project: project)
-    user = User.create!(name: "Temp User", email_address: "temp_task_assign@example.com", password: "password", organization: org)
+    user = User.create!(name: "Temp User", email_address: "temp_task_assign@example.com", password: "password")
     task.task_assignments.create!(user: user)
 
     assert_difference "TaskAssignment.count", -1 do

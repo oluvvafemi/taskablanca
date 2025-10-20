@@ -24,15 +24,16 @@ class OrganizationTest < ActiveSupport::TestCase
     assert org.valid?
   end
 
-  test "destroys associated users when organization is destroyed" do
+  test "destroys associated organization_memberships when organization is destroyed" do
     org = Organization.create!(name: "Temp Org Users")
-    user = org.users.create!(
+    user = User.create!(
       name: "Test User",
       email_address: "testuser@acme.com",
       password: "password"
     )
+    OrganizationMembership.create!(user: user, organization: org, role: :member)
 
-    assert_difference "User.count", -1 do
+    assert_difference "OrganizationMembership.count", -1 do
       org.destroy
     end
   end
