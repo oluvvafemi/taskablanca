@@ -15,6 +15,9 @@ class ApplicationController < ActionController::Base
       Current.organization = membership.organization if membership
     end
 
-    Current.organization ||= Current.user.organizations.first
+    unless Current.organization
+      Current.organization = Current.user.organizations.first
+      session[:current_organization_id] = Current.organization&.id
+    end
   end
 end

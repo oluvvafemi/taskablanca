@@ -84,7 +84,9 @@ class OrganizationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not switch to organization user is not member of" do
+    get organizations_url
     old_org_id = session[:current_organization_id]
+    assert_not_nil old_org_id
     
     post switch_organization_url(@stark)
     assert_redirected_to organizations_path
